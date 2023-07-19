@@ -21,7 +21,7 @@ function* fetchDataSaga():any {
               `,
         });
 
-        yield put(fetchDataSuccess(response.data.getData));
+        yield put(fetchDataSuccess(response.data.getTopSellingProduct));
     } catch (error: any) {
         yield put(fetchDataFailure(error?.message || "Error"));
     }
