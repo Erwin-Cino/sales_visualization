@@ -1,5 +1,7 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
+import {deleteDummyData, findTopSellingProduct, insertDummySalesData} from './salesData.js';
+
 const books = [
     {
         title: 'The Awakening',
@@ -19,13 +21,33 @@ const typeDefs = `#graphql
     title: String
     author: String
   }
-
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
+  
+  type SalesData {
+    product: String,
+    salesRevenue: Int,
+    region: String
+  }
+  
+  type Query {
+    topSellingProducts: [SalesData]
+  }
+  
   type Query {
     books: [Book]
   }
+  
+  # Mutation
+  type Mutation {
+    insertDummyData:[SalesData]
+  }
+  type Mutation {
+    deleteDummyData: [SalesData]
+  }
+  
+ 
+  # The "Query" type is special: it lists all of the available queries that
+  # clients can execute, along with the return type for each. In this
+  # case, the "books" query returns an array of zero or more Books (defined above).
 `;
 
 // Resolvers define how to fetch the types defined in your schema.
@@ -33,6 +55,15 @@ const typeDefs = `#graphql
 const resolvers = {
     Query: {
         books: () => books,
+        topSellingProducts: async () => await findTopSellingProduct()
+    },
+    Mutation: {
+        insertDummyData: async () => {
+            await insertDummySalesData()
+        },
+        deleteDummyData: async () => {
+            await deleteDummyData()
+        },
     },
 };
 
