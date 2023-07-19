@@ -29,7 +29,7 @@ const typeDefs = `#graphql
   }
   
   type Query {
-    topSellingProducts: [SalesData]
+    getTopSellingProduct: [SalesData]
   }
   
   type Query {
@@ -55,7 +55,7 @@ const typeDefs = `#graphql
 const resolvers = {
     Query: {
         books: () => books,
-        topSellingProducts: async () => await findTopSellingProduct()
+        getTopSellingProduct: async () => await findTopSellingProduct()
     },
     Mutation: {
         insertDummyData: async () => {
