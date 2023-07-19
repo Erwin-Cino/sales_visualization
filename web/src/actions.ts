@@ -2,7 +2,7 @@ export const fetchData = () => ({
     type: 'FETCH_DATA',
 });
 
-export const fetchDataSuccess = (data: { id: number; name: string }[]) => ({
+export const fetchDataSuccess = (data: { product: string; salesRevenue: number; region: string }[]) => ({
     type: 'FETCH_DATA_SUCCESS',
     payload: data,
 });
