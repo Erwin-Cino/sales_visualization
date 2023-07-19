@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect} from 'react';
 import './App.css';
+import { useDispatch } from "react-redux";
+import { connect } from 'react-redux';
+import { fetchData } from './actions';
+import { RootState } from './reducers';
 
-function App() {
+interface AppProps {
+    data: {
+        loading: boolean;
+        error: string | null;
+        items: { product: string; salesRevenue: number; region: string }[];
+    };
+}
+const App:React.FC<AppProps> = ({data}) => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchData());
+    },[dispatch])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Lets do this</h1>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state: RootState) => ({
+    data: state.data,
+});
+
+export default connect(mapStateToProps)(App);
