@@ -1,4 +1,4 @@
-const initialState = {
+export const initialState = {
     data: {
         items: [],
         loading: false,
@@ -6,7 +6,20 @@ const initialState = {
     },
 };
 
-const reducer = (state = initialState, action: any) => {
+interface DataState {
+    items: { product: string; salesRevenue: number; region: string }[];
+    loading: boolean;
+    error: string | null;
+}
+export interface RootState {
+    data: DataState;
+}
+
+interface Action {
+    type: string;
+    payload: any;
+}
+const reducer = (state = initialState, action: Action) => {
     switch (action.type) {
         case 'FETCH_DATA':
             return {
