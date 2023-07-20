@@ -19,20 +19,10 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-interface TopSellingData {
-    product: string;
-    salesRevenue: number;
-    region: string;
+interface DataProps {
+    topSellingData: { product: string; salesRevenue: number; region: string }[];
 }
-
-interface AppProps {
-    topSellingData: {
-        loading: boolean;
-        error: string | null;
-        items: { product: string; salesRevenue: number; region: string }[];
-    };
-}
-const TopSellingDataChart: React.FC<AppProps> = ({topSellingData}) => {
+const TopSellingDataChart: React.FC<DataProps> = ({topSellingData}) => {
     const options = {
         indexAxis: 'y' as const,
         elements: {
@@ -52,7 +42,7 @@ const TopSellingDataChart: React.FC<AppProps> = ({topSellingData}) => {
         },
     };
     let dataSet: number[] = []
-    const topTenSelling = topSellingData.items.slice(0, 10)
+    const topTenSelling = topSellingData.slice(0, 10)
     const labels = topTenSelling.slice(0, 10).map(item => {
         dataSet.push(item.salesRevenue)
         return item.product
@@ -74,7 +64,7 @@ const TopSellingDataChart: React.FC<AppProps> = ({topSellingData}) => {
                 width: 1200,
             }}
         >
-            <Card variant="outlined" elevation={20}>
+            <Card variant="outlined" style={{padding: 30}}>
                 <Bar options={options} data={data} />
             </Card>
         </Box>
