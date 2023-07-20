@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid';
 import TopSellingDataChart from './components/TopSellingDataChart';
 import TopSellingDataByRegion from './components/TopSellingDataByRegion';
 import SalesAgainstTarget from './components/SalesAgainstTarget';
+import SalesByProductCategory from './components/SalesByProductCategory';
 interface AppProps {
     data: {
         loading: boolean;
@@ -35,6 +36,7 @@ const App:React.FC<AppProps> = ({data}) => {
             <TopSellingDataChart topSellingData={topSellingData} />
             <TopSellingDataByRegion topSellingRegion={topSellingData} />
             <SalesAgainstTarget chartData={data.items} />
+            <SalesByProductCategory chartData={data.items} />
         </Grid>
     </div>
   );
