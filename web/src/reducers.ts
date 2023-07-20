@@ -7,7 +7,13 @@ export const initialState = {
 };
 
 interface DataState {
-    items: { product: string; salesRevenue: number; region: string }[];
+    items: {
+        product: string;
+        salesRevenue: number;
+        region: string;
+        targetSales: number;
+        productCategory: string;
+    }[];
     loading: boolean;
     error: string | null;
 }
