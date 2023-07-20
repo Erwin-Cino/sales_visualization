@@ -1,17 +1,6 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import {deleteDummyData, findTopSellingProduct, insertDummySalesData} from './salesData.js';
-
-const books = [
-    {
-        title: 'The Awakening',
-        author: 'Kate Chopin',
-    },
-    {
-        title: 'City of Glass',
-        author: 'Paul Auster',
-    },
-];
+import {deleteDummyData, findTopSellingProduct, insertDummySalesData, addTargetAndCategory} from './salesData.js';
 
 const typeDefs = `#graphql
   # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
@@ -25,15 +14,13 @@ const typeDefs = `#graphql
   type SalesData {
     product: String,
     salesRevenue: Int,
-    region: String
+    region: String,
+    productCategory: String,
+    targetSales: Int
   }
   
   type Query {
     getTopSellingProduct: [SalesData]
-  }
-  
-  type Query {
-    books: [Book]
   }
   
   # Mutation
@@ -42,6 +29,9 @@ const typeDefs = `#graphql
   }
   type Mutation {
     deleteDummyData: [SalesData]
+  }
+  type Mutation {
+    addTargetAndCategory: [SalesData]
   }
   
  
@@ -54,7 +44,6 @@ const typeDefs = `#graphql
 // This resolver retrieves books from the "books" array above.
 const resolvers = {
     Query: {
-        books: () => books,
         getTopSellingProduct: async () => await findTopSellingProduct()
     },
     Mutation: {
@@ -64,6 +53,9 @@ const resolvers = {
         deleteDummyData: async () => {
             await deleteDummyData()
         },
+        addTargetAndCategory: async () => {
+            await addTargetAndCategory()
+        }
     },
 };
 
