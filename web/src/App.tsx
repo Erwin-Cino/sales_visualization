@@ -7,25 +7,34 @@ import { RootState } from './reducers';
 import Grid from '@mui/material/Grid';
 import TopSellingDataChart from './components/TopSellingDataChart';
 import TopSellingDataByRegion from './components/TopSellingDataByRegion';
+import SalesAgainstTarget from './components/SalesAgainstTarget';
 interface AppProps {
     data: {
         loading: boolean;
         error: string | null;
-        items: { product: string; salesRevenue: number; region: string }[];
+        items: {
+            product: string;
+            salesRevenue: number;
+            region: string;
+            targetSales: number;
+            productCategory: string;
+        }[];
     };
 }
 const App:React.FC<AppProps> = ({data}) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchData());
-    },[dispatch])
-    const topSellingData =  data.items.slice(0, 10)
+    },[dispatch]);
+    const topSellingData = data.items.slice(0, 10);
+
   return (
     <div className="App">
       <h1>Sales Dashboard</h1>
         <Grid container justifyContent={"center"} style={{margin: 30}}>
             <TopSellingDataChart topSellingData={topSellingData} />
             <TopSellingDataByRegion topSellingRegion={topSellingData} />
+            <SalesAgainstTarget chartData={data.items} />
         </Grid>
     </div>
   );
