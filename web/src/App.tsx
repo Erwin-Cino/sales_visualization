@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import { connect } from 'react-redux';
 import { fetchData } from './actions';
 import { RootState } from './reducers';
-
+import Grid from '@mui/material/Grid';
+import TopSellingDataChart from './TopSellingDataChart'
 interface AppProps {
     data: {
         loading: boolean;
@@ -17,9 +18,13 @@ const App:React.FC<AppProps> = ({data}) => {
     useEffect(() => {
         dispatch(fetchData());
     },[dispatch])
+
   return (
     <div className="App">
-      <h1>Lets do this</h1>
+      <h1>Sales Dashboard</h1>
+        <Grid container justifyContent={"center"}>
+            <TopSellingDataChart topSellingData={data} />
+        </Grid>
     </div>
   );
 }
