@@ -16,6 +16,8 @@ function* fetchDataSaga():any {
                     product
                     salesRevenue
                     region
+                    targetSales
+                    productCategory
                   }
                 }
               `,

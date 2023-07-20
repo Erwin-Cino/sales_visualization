@@ -6,7 +6,9 @@ mongoose.connect('mongodb+srv://erwincino0812:tNk7PqtOquMN8dFw@cluster0.vpdiwqm.
 const SalesDataSchema = new mongoose.Schema({
     product: String,
     salesRevenue: Number,
-    region: String
+    region: String,
+    targetSales: Number,
+    productCategory: String
 });
 // Create a model using the schema
 export const SalesData = mongoose.model('SalesData', SalesDataSchema);
@@ -52,5 +54,21 @@ export const findTopSellingProduct = async () => {
         return await SalesData.find().sort("-salesRevenue")
     } catch (error) {
         console.log("error finding top revenue", error?.message)
+    }
+}
+
+export const addTargetAndCategory = async () => {
+    const categories = ["Food", "Shoes", "Shirt", "Dress", "Toy", "House Item"]
+    try {
+        const findAllSalesData = await SalesData.find();
+        if (findAllSalesData) {
+            for (const salesData of findAllSalesData) {
+                salesData.targetSales = faker.number.int({ min: 50, max: 500 });
+                salesData.productCategory = categories[faker.number.int({min: 0, max: 5})]
+                await salesData.save();
+            }
+        }
+    } catch (error) {
+        console.log("error inserting target sales", error.message)
     }
 }

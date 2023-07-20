@@ -20,7 +20,13 @@ ChartJS.register(
     Legend
 );
 interface DataProps {
-    topSellingData: { product: string; salesRevenue: number; region: string }[];
+    topSellingData: {
+        product: string;
+        salesRevenue: number;
+        region: string;
+        targetSales: number;
+        productCategory: string;
+    }[];
 }
 const TopSellingDataChart: React.FC<DataProps> = ({topSellingData}) => {
     const options = {
@@ -41,7 +47,7 @@ const TopSellingDataChart: React.FC<DataProps> = ({topSellingData}) => {
             },
         },
     };
-    let dataSet: number[] = []
+    const dataSet: number[] = []
     const topTenSelling = topSellingData.slice(0, 10)
     const labels = topTenSelling.slice(0, 10).map(item => {
         dataSet.push(item.salesRevenue)
